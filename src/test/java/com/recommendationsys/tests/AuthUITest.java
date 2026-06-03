@@ -29,7 +29,6 @@ public class AuthUITest {
     @DisplayName("Тест успешной регистрации нового пользователя")
     public void testSuccessRegistration() {
         registerPage.open();
-        // Генерируем случайную почту, чтобы тест не падал из-за дубликатов
         String email = "test" + System.currentTimeMillis() + "@mail.ru";
         registerPage.registerAs(email, "TesterBot", "password123");
         

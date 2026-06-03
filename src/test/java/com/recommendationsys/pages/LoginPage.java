@@ -9,7 +9,6 @@ public class LoginPage {
     private WebDriver driver;
     private WebDriverWait wait;
 
-    // Селекторы на основе ваших плейсхолдеров и текста
     private By emailInput = By.xpath("//input[@placeholder='Электронная почта']");
     private By passwordInput = By.xpath("//input[@placeholder='Пароль']");
     private By loginButton = By.xpath("//button[contains(text(), 'ВОЙТИ В АККАУНТ')]");
@@ -31,11 +30,9 @@ public class LoginPage {
 
         driver.findElement(passwordInput).sendKeys(password);
         
-        // КЛИК ЧЕРЕЗ JAVASCRIPT (игнорирует перекрывающие уведомления)
         WebElement btn = driver.findElement(loginButton);
         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", btn);
 
-        // Ждем, пока токен появится в localStorage
         wait.until(webDriver -> ((JavascriptExecutor) webDriver)
             .executeScript("return localStorage.getItem('token')") != null);
     }
@@ -44,7 +41,6 @@ public class LoginPage {
         wait.until(ExpectedConditions.visibilityOfElementLocated(emailInput)).sendKeys(email);
         driver.findElement(passwordInput).sendKeys(password);
         
-        // КЛИК ЧЕРЕЗ JAVASCRIPT
         WebElement btn = driver.findElement(loginButton);
         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", btn);
     }

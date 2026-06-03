@@ -23,7 +23,6 @@ public class ProfileUITest {
         profilePage = new ProfilePage(driver);
         loginPage = new LoginPage(driver);
 
-        // Для тестов профиля всегда нужна авторизация
         loginPage.open();
         loginPage.loginAs("dreod@mail.ru", "12345");
     }
@@ -32,7 +31,7 @@ public class ProfileUITest {
     @DisplayName("Тест: Отображение данных пользователя")
     public void testProfileInfo() {
         profilePage.open();
-        assertEquals("sardq", profilePage.getUsername()); // Укажите ваш тестовый ник
+        assertEquals("sardq", profilePage.getUsername());
     }
 
     @Test
@@ -52,10 +51,8 @@ public class ProfileUITest {
         profilePage.open();
         int initialCount = profilePage.getReviewsCount();
         
-        // Если отзывов больше 5, должна быть кнопка
         if (initialCount >= 5) {
             profilePage.clickLoadMoreReviews();
-            // Ждем небольшую задержку подгрузки React
             try { Thread.sleep(1000); } catch (InterruptedException e) {}
             
             int newCount = profilePage.getReviewsCount();

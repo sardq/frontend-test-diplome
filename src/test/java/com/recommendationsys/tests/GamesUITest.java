@@ -27,18 +27,14 @@ public class GamesUITest {
     public void testTagSearchAndSelect() {
         gamesPage.open();
         
-        // Проверяем поиск тегов (например, ищем Хоррор)
         gamesPage.searchTag("Хоррор");
         
-        // Кликаем по найденному тегу
         gamesPage.clickTagByName("Хоррор");
         gamesPage.waitForHeaderToContain("Хоррор");
 
-        // Проверяем, что заголовок изменился на название тега
         assertTrue(gamesPage.getHeaderText().contains("Хоррор"), 
             "Заголовок должен соответствовать выбранному тегу");
         
-        // Проверяем, что URL содержит параметр тега
         assertTrue(driver.getCurrentUrl().contains("tag="));
     }
 
@@ -46,7 +42,6 @@ public class GamesUITest {
     @DisplayName("Те ст: Пагинация списка игр")
     public void testInfiniteScroll() {
         gamesPage.open();
-        // Ждем загрузки первой страницы (10 игр)
         int initialCount = gamesPage.getGamesCount();
         
         if (initialCount >= 10) {
@@ -63,7 +58,6 @@ public class GamesUITest {
     public void testGameCardData() {
         gamesPage.open();
          gamesPage.waitForGamesToLoad();
-        // Проверяем, что в первой карточке есть звезда (рейтинг)
         String firstTitle = gamesPage.getAllVisibleTitles().get(0);
         assertNotNull(firstTitle, "Название игры должно отображаться");
         
@@ -77,7 +71,6 @@ public class GamesUITest {
         gamesPage.waitForGamesToLoad();
         gamesPage.clickFirstGame();
         
-        // Проверяем переход на страницу игры
         waitUrlContains("/games/");
         assertTrue(driver.getCurrentUrl().matches(".*/games/\\d+"), "URL должен вести на страницу конкретной игры");
     }

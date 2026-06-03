@@ -25,7 +25,6 @@ public class PreferencesUITest {
         prefsPage = new PreferencesPage(driver);
         loginPage = new LoginPage(driver);
 
-        // Вход в систему
         loginPage.open();
         loginPage.loginAs("dreod@mail.ru", "12345");
     }
@@ -35,14 +34,10 @@ public class PreferencesUITest {
     public void testSearchAndSelectPreference() {
         prefsPage.open();
         
-        // 1. Проверяем поиск
         prefsPage.searchTag("Космос");
         
-        // 2. Оцениваем первый найденный тег на 5 звезд
         int initialCount = prefsPage.getSelectedTagsCount();
         prefsPage.rateFirstTag(5);
-        
-        // 3. Проверяем, что тег добавился в нижний список "Твоя база интересов"
         assertEquals(initialCount, prefsPage.getSelectedTagsCount(), 
             "Количество выбранных тегов должно увеличиться");
     }
@@ -52,12 +47,10 @@ public class PreferencesUITest {
     public void testRemovePreference() {
         prefsPage.open();
         
-        // Сначала добавим что-то
         prefsPage.searchTag("Action");
         prefsPage.rateFirstTag(4);
         int countAfterAdd = prefsPage.getSelectedTagsCount();
         
-        // Удаляем
         prefsPage.removeFirstSelectedTag();
         
         assertEquals(countAfterAdd - 1, prefsPage.getSelectedTagsCount(), 
@@ -69,8 +62,6 @@ public class PreferencesUITest {
     public void testSaveAndRedirect() {
         prefsPage.open();
         
-        // Кнопка должна быть заблокирована, если ничего не выбрано (согласно логике JSX)
-        // Но так как у пользователя уже могут быть старые теги, проверим логику добавления
         prefsPage.searchTag("Кооператив");
         prefsPage.rateFirstTag(5);
         
@@ -78,7 +69,6 @@ public class PreferencesUITest {
         
         prefsPage.clickSave();
         
-        // Проверяем, что нас перекинуло на главную страницу
         new org.openqa.selenium.support.ui.WebDriverWait(driver, Duration.ofSeconds(5))
             .until(org.openqa.selenium.support.ui.ExpectedConditions.urlToBe("http://localhost/"));
     }

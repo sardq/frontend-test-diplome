@@ -10,7 +10,6 @@ public class PreferencesPage {
     private WebDriver driver;
     private WebDriverWait wait;
 
-    // Селекторы
     private By searchInput = By.xpath("//input[contains(@placeholder, 'Начните вводить')]");
     private By tagCards = By.xpath("//div[contains(@class, 'rounded-[2rem]') and contains(., 'Категория')]");
     private By starRatingContainer = By.xpath(".//div[contains(@class, 'cursor-pointer') and contains(., '★')]");
@@ -31,23 +30,19 @@ public class PreferencesPage {
         WebElement input = wait.until(ExpectedConditions.visibilityOfElementLocated(searchInput));
         input.clear();
         input.sendKeys(text);
-        // Ждем загрузки результатов (debounce 300ms)
         try { Thread.sleep(1000); } catch (InterruptedException e) {}
     }
 
-    // Имитация оценки тега (клик по звездам)
     public void rateFirstTag(int stars) {
         WebElement firstCard = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(tagCards)).get(0);
         WebElement starsElement = firstCard.findElement(starRatingContainer);
         
         int width = starsElement.getSize().getWidth();
-        // Рассчитываем смещение: если кликнуть в самый конец (width), будет 5 звезд.
-        // Клик в середину даст 2.5 звезды.
         int offset = (int) (width * (stars / 5.0));
 
         new Actions(driver)
-            .moveToElement(starsElement, -width/2, 0) // Перемещаемся в начало полоски
-            .moveByOffset(offset, 0)                  // Двигаемся к нужной оценке
+            .moveToElement(starsElement, -width/2, 0) 
+            .moveByOffset(offset, 0)                  
             .click()
             .perform();
     }

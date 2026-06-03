@@ -24,7 +24,6 @@ public class UserProfileViewUITest {
     @Test
     @DisplayName("Тест: Проверка отображения данных чужого профиля")
     public void testPublicProfileDisplay() {
-        // Предположим, у нас в базе есть юзер с ID 1
         userProfilePage.open(25147L);
         
         String username = userProfilePage.getUsername();
@@ -39,7 +38,6 @@ public class UserProfileViewUITest {
         
         int initialCount = userProfilePage.getReviewsCount();
         
-        // Если у юзера много отзывов (больше 5), проверяем кнопку "Смотреть ещё"
         try {
             userProfilePage.clickLoadMore();
             int newCount = userProfilePage.getReviewsCount();
@@ -57,7 +55,6 @@ public class UserProfileViewUITest {
         if (userProfilePage.getReviewsCount() > 0) {
             userProfilePage.clickOnFirstReviewGame();
             
-            // Проверяем, что URL сменился на страницу игры
             new org.openqa.selenium.support.ui.WebDriverWait(driver, java.time.Duration.ofSeconds(5))
                 .until(org.openqa.selenium.support.ui.ExpectedConditions.urlContains("/games/"));
             

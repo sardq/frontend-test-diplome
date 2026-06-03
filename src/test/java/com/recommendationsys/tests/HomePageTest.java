@@ -29,14 +29,11 @@ public class HomePageTest {
     @Test
     @DisplayName("Тест RecSys: Проверка блока персональных рекомендаций")
     public void testRecommendationsPresence() {
-        // 1. Авторизуемся (предполагаем, что у юзера есть предпочтения)
         loginPage.open();
         loginPage.loginAs("dreod@mail.ru", "12345"); 
 
-        // 2. Проверяем наличие блока "Специально для тебя"
         assertTrue(homePage.isRecommendationsVisible(), "Блок рекомендаций должен быть виден для авторизованного юзера");
         
-        // 3. Проверяем работу кнопки пересчета
         homePage.clickRecalculate();
         assertTrue(homePage.isRecalculating(), "Кнопка должна перейти в состояние загрузки");
     }
@@ -57,10 +54,8 @@ public class HomePageTest {
     @DisplayName("Тест Адаптивности: Проверка интерфейса на мобильном разрешении")
     public void testMobileResponsiveness() {
         homePage.open();
-        // Устанавливаем размер экрана как у iPhone X
         driver.manage().window().setSize(new Dimension(375, 812));
         
-        // Проверяем, что элементы не перекрывают друг друга и поиск доступен
         assertTrue(driver.findElement(By.xpath("//input[contains(@placeholder, 'Поиск')]")).isDisplayed());
     }
 
@@ -71,7 +66,6 @@ public class HomePageTest {
         homePage.waitForGamesToLoad();
         homePage.clickFirstGame();
         
-        // Проверяем, что URL изменился на /games/ID
         assertTrue(driver.getCurrentUrl().contains("/games/"));
     }
 

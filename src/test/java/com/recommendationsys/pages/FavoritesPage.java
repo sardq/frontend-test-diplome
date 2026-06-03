@@ -10,7 +10,6 @@ public class FavoritesPage {
     private WebDriver driver;
     private WebDriverWait wait;
 
-    // Селекторы
     private By searchInput = By.xpath("//input[@placeholder='Поиск по названию...']");
     private By tagSelect = By.xpath("//select");
     private By gameCards = By.cssSelector(".grid > div.cursor-pointer");
@@ -27,16 +26,13 @@ public class FavoritesPage {
         driver.get("http://localhost/favorites");
     }
 
-    // Ввод текста в поиск
     public void searchFor(String text) {
         WebElement input = wait.until(ExpectedConditions.visibilityOfElementLocated(searchInput));
         input.clear();
         input.sendKeys(text);
-        // Небольшое ожидание для отработки useEffect на фронтенде
         try { Thread.sleep(800); } catch (InterruptedException e) {}
     }
 
-    // Выбор тега из выпадающего списка
     public void selectTag(String tagName) {
         wait.until(ExpectedConditions.textToBePresentInElementLocated(tagSelect, tagName));
         WebElement selectElement = driver.findElement(tagSelect);
@@ -60,7 +56,6 @@ public class FavoritesPage {
     public void clickLoadMore() {
         WebElement btn = wait.until(ExpectedConditions.elementToBeClickable(loadMoreBtn));
         btn.click();
-        // Ждем, пока исчезнет индикатор загрузки
         wait.until(ExpectedConditions.textToBePresentInElementLocated(loadMoreBtn, "Показать больше"));
     }
 

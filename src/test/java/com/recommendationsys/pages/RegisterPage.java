@@ -28,11 +28,9 @@ public class RegisterPage {
         driver.findElement(usernameInput).sendKeys(username);
         driver.findElement(passwordInput).sendKeys(password);
         
-        // КЛИК ЧЕРЕЗ JAVASCRIPT (игнорирует перекрытия)
         WebElement btn = driver.findElement(registerButton);
         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", btn);
 
-        // Ждем перехода на главную
         wait.until(ExpectedConditions.urlToBe("http://localhost/"));
     }
 }

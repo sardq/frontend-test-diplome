@@ -11,12 +11,10 @@ public class GamesPage {
     private WebDriver driver;
     private WebDriverWait wait;
 
-    // Селекторы фильтров
     private By tagSearchInput = By.xpath("//input[@placeholder='Быстрый поиск по тегам...']");
     private By popularPill = By.xpath("//span[contains(text(), 'ПОПУЛЯРНОЕ')]");
     private By showAllTagsBtn = By.xpath("//button[contains(text(), 'Показать все категории')]");
     
-    // Селекторы списка игр
     private By pageHeader = By.tagName("h2");
     private By gameCards = By.xpath("//div[contains(@class, 'group') and contains(@class, 'cursor-pointer')]");
     private By gameCardTitle = By.xpath("//div[contains(@class, 'group')]//h3");
@@ -44,11 +42,9 @@ public class GamesPage {
         WebElement input = wait.until(ExpectedConditions.visibilityOfElementLocated(tagSearchInput));
         input.clear();
         input.sendKeys(text);
-        // Задержка 300мс из кода (debounce) + время на запрос
         try { Thread.sleep(1000); } catch (InterruptedException e) {}
     }
 
-    // Выбор тега по его названию
     public void clickTagByName(String tagName) {
         By specificTag = By.xpath("//span[contains(text(), '" + tagName + "')]");
         wait.until(ExpectedConditions.elementToBeClickable(specificTag)).click();
@@ -79,14 +75,12 @@ public class GamesPage {
     public void clickLoadMore() {
         WebElement btn = wait.until(ExpectedConditions.elementToBeClickable(loadMoreBtn));
         btn.click();
-        // Ждем, пока индикатор "Загрузка..." сменится обратно
         wait.until(ExpectedConditions.textToBePresentInElementLocated(loadMoreBtn, "Загрузить ещё"));
     }
 
     public void clickFirstGame() {
         WebElement firstGame = wait.until(ExpectedConditions.elementToBeClickable(gameCardTitle));
     
-    // 2. Кликаем по заголовку
     firstGame.click();
     }
 }
